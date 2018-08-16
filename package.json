@@ -1,0 +1,38 @@
+{
+  "name": "jaraxxus",
+  "version": "0.0.1",
+  "bin": {
+    "jaraxxus": "./bin/jaraxxus.js"
+  },
+  "description": "创建react项目，react-cli",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin/jaraxxus.js start"
+  },
+  "keywords": [
+    "cli",
+    "react"
+  ],
+  "author": "Milk",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "chalk": "^2.4.1",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^3.0.0",
+    "react-hot-loader": "^4.3.4",
+    "style-loader": "^0.22.1",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.16.5",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-merge": "^4.1.4"
+  },
+  "devDependencies": {
+    "commander": "^2.17.1",
+    "react": "^16.4.2"
+  }
+}
