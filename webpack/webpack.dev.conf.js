@@ -12,7 +12,7 @@ const devConf = merge(baseConf, {
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
   mode: 'development',
   entry: [
-    'babel-polyfill',
+    require.resolve('babel-polyfill'),
     require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
     config.entry
@@ -53,7 +53,6 @@ const devConf = merge(baseConf, {
       'process.env.NODE_ENV': config.dev.definePluginEnv
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: config.dev.appHtml,
       inject: true
@@ -63,6 +62,6 @@ const devConf = merge(baseConf, {
 
 const server = new webpackDevServer(webpack(devConf), devConf.devServer)
 
-server.listen(config.dev.port, '127.0.0.1', () => {
-  console.log('Starting server on http://localhost:8080');
+server.listen(config.dev.port, '0.0.0.0', () => {
+  console.log(`Starting server on http://localhost:${config.dev.port}`)
 })

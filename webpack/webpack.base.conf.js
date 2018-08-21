@@ -1,19 +1,40 @@
 const utils = require('./utils.js')
 const config = require('../config/index.js')
 
-function babelDynamicConfig (configArr) {
-  let arr = []
-  configArr.forEach((item) => {
-    arr.push(require.resolve(item))
-  })
-  return arr
-}
+const createLintingRule = () => ({
+  test: /\.(js|jsx)$/,
+  loader: require.resolve('eslint-loader'),
+  enforce: 'pre',
+  include: [config.srcPath],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    baseConfig: {
+      parser: require.resolve('babel-eslint'),
+      env: {
+        browser: true
+      },
+      extends: [
+        require.resolve('eslint-config-react-app'),
+        require.resolve('eslint-config-airbnb')
+      ],
+      plugins: [
+        'import',
+        'jsx-a11y',
+        'react'
+      ],
+      rules: config.dev.eslintRules
+    },
+    useEslintrc: false,
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
 
 const baseConf = {
   resolve: {
     alias: {
       '@': config.srcPath,
-    }
+    },
+    symlinks: false
   },
   module: {
     rules: [
@@ -23,21 +44,18 @@ const baseConf = {
           requireEnsure: false
         }
       },
-      // ...(config.dev.useEslint ? [createLintingRule()] : []),
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
+        loader: require.resolve('babel-loader'),
         include: [config.srcPath],
         options: {
-          cacheDirectory: true,
-          // babelrc: false,
-          // presets: babelDynamicConfig(config.dev.babelPresets),
-          // plugins: babelDynamicConfig(config.dev.babelPlugin)
+          cacheDirectory: true
         }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -45,7 +63,7 @@ const baseConf = {
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
@@ -53,7 +71,7 @@ const baseConf = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')

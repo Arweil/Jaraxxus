@@ -7,7 +7,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
     let result = []
     let obj = {}
     for (var i = 0, len = arr.length; i < len; i++) {
-      let cnfg = { loader: `${arr[i]}-loader` }
+      let cnfg = { loader: require.resolve(`${arr[i]}-loader`) }
       cnfg.options = {
         sourceMap: !!sourceMap
       }
@@ -25,13 +25,13 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
     if (!!extract) {
       obj.use = ExtractTextPlugin.extract({
         fallback: [{
-          loader: 'style-loader' // 使用style-loader提取css
+          loader: require.resolve('style-loader') // 使用style-loader提取css
         }],
         use: result
       })
     } else {
       obj.use = result
-      obj.use.unshift({ loader: 'style-loader' })
+      obj.use.unshift({ loader: require.resolve('style-loader') })
     }
 
     return obj

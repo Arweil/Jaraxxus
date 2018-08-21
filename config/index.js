@@ -1,39 +1,38 @@
-// const dev = require('./dev.js')
-// const build = require('./prod.js')
 const fs = require('fs')
 const path = require('path')
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 
-console.log(resolveApp('src/index.js'))
+// 获取配置信息
+const config = require(resolveApp('jaraxxus.config.js'))
 
-const dev = {
-  assetsPublicPath: '/',
-  assetsSubDirectory: resolveApp('static'),
-  cssModules: true,
-  definePluginEnv: '"development"',
-  devtool: 'eval-source-map',
-  // Various Dev Server settings
-  host: 'localhost', // can be overwritten by process.env.HOST
-  port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-  autoOpenBrowser: true,
-  errorOverlay: true,
-  notifyOnErrors: true,
-  poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-  proxyTable: {},
-  contentBase: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-
-  // 因为babel 6+暂时不提供动态配置，所以直接使用babel-loader实现动态配置
-  // babelPresets: [
-  //   'babel-preset-es2015',
-  //   'babel-preset-react'
-  // ],
-  // babelPlugin: [
-  //   'react-hot-loader/babel'
-  // ]
+function isBoolean (val) {
+  return Object.prototype.toString.call(val) === '[object Boolean]'
 }
+
+function mergeBooleanVal (defaultVal, newVal) {
+  return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal
+}
+
+const confDev = config.dev
+let dev = {
+  assetsPublicPath: !!confDev.assetsPublicPath ? confDev.assetsPublicPath : '/',
+  assetsSubDirectory: resolveApp(!!confDev.assetsSubDirectory ? confDev.assetsSubDirectory : 'static'),
+  cssModules: mergeBooleanVal(true, confDev.cssModules),
+  devtool: !!confDev.devtool ? confDev.devtool : 'eval-source-map',
+  port: !!confDev.port ? confDev.port : 8080,
+  autoOpenBrowser: mergeBooleanVal(true, confDev.autoOpenBrowser),
+  errorOverlay: mergeBooleanVal(true, confDev.errorOverlay),
+  notifyOnErrors: mergeBooleanVal(true, confDev.notifyOnErrors),
+  poll: mergeBooleanVal(false, confDev.poll), // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+  proxyTable: Object.assign({}, confDev.proxyTable),
+  contentBase: resolveApp(!!confDev.contentBase ? confDev.contentBase : 'public'),
+  appHtml: resolveApp(!!confDev.appHtml ? confDev.appHtml : 'public/index.html'),
+  useEslint: mergeBooleanVal(true, confDev.useEslint),
+  showEslintErrorsInOverlay: mergeBooleanVal(true, confDev.showEslintErrorsInOverlay)
+}
+dev.eslintRules = dev.useEslint ? require(resolveApp('eslint.rules.js')) : {}
 
 const build = {
   assetsPublicPath: resolveApp(''),
