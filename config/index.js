@@ -28,7 +28,6 @@ let dev = {
   poll: mergeBooleanVal(false, confDev.poll), // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
   proxyTable: Object.assign({}, confDev.proxyTable),
   contentBase: resolveApp(!!confDev.contentBase ? confDev.contentBase : 'public'),
-  appHtml: resolveApp(!!confDev.appHtml ? confDev.appHtml : 'public/index.html'),
   useEslint: mergeBooleanVal(true, confDev.useEslint),
   showEslintErrorsInOverlay: mergeBooleanVal(true, confDev.showEslintErrorsInOverlay)
 }
@@ -36,14 +35,16 @@ dev.eslintRules = dev.useEslint ? require(resolveApp('eslint.rules.js')) : {}
 
 const build = {
   assetsPublicPath: resolveApp(''),
-  assetsSubDirectory: resolveApp('static'),
+  assetsSubDirectory: 'static',
   assetsRoot: resolveApp('dist'),
   cssModules: true,
-  definePluginEnv: '"production"',
+  productionSourceMap: true,
+  bundleAnalyzerReport: true
 }
 
 module.exports = {
   entry: resolveApp('src/index.js'),
+  appHtml: resolveApp('public/index.html'),
   srcPath: resolveApp('src'),
   dev,
   build

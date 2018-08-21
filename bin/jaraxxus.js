@@ -15,13 +15,12 @@ program
   .command(`start`)
   .action(function (env, options) {
     require(`../webpack/webpack.dev.conf`)
-    console.log(`start`)
   })
 
 program
   .command(`build`)
   .action(function (env, options) {
-    console.log(`build`)
+    require(`../webpack/build`)
   })
 
 program.parse(process.argv)

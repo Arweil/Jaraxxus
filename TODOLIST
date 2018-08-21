@@ -4,7 +4,7 @@ dev
   get user ip
 
 prod
-  all
+  code splite
 
 config
   read file first

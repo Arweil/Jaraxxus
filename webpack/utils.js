@@ -1,6 +1,6 @@
 const path = require('path')
 const config = require('../config/index')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 function baseCssLoader ({ cssModules, sourceMap, extract }) {
   function MakeLoaders (arr) {
@@ -23,15 +23,15 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
 
     // style-loader 放到use数组起始位置 & 是否提取css
     if (!!extract) {
-      obj.use = ExtractTextPlugin.extract({
-        fallback: [{
-          loader: require.resolve('style-loader') // 使用style-loader提取css
-        }],
-        use: result
+      obj.use = result
+      obj.use.unshift({
+        loader: require.resolve(MiniCssExtractPlugin.loader)
       })
     } else {
       obj.use = result
-      obj.use.unshift({ loader: require.resolve('style-loader') })
+      obj.use.unshift({
+        loader: require.resolve('style-loader')
+      })
     }
 
     return obj

@@ -49,12 +49,9 @@ const devConf = merge(baseConf, {
     }
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': config.dev.definePluginEnv
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: config.dev.appHtml,
+      template: config.appHtml,
       inject: true
     }),
   ]
