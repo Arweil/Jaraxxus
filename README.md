@@ -9,6 +9,7 @@
 
 ## What means Jaraxxus
 ![Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
-Jaraxxus是炉石中的一个恶魔，他非常强大，2费可以召唤一个666的地狱火。
 
-我希望此项目也能通过简单的配置创建出强大的React项目。
+Jaraxxus是炉石中的一个恶魔，他非常强大，2费可以召唤一个666的地狱火。
+
+我希望此项目也能通过简单的配置创建出强大的React项目。
