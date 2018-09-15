@@ -8,7 +8,7 @@
 4. *jaraxxus build* 命令用作项目打包。
 
 ## What means Jaraxxus
-![Jaraxxus](/Users/milk/Work/Jaraxxus/README.md)
+![Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
 Jaraxxus是炉石中的一个恶魔，他非常强大，2费可以召唤一个666的地狱火。
 
 我希望此项目也能通过简单的配置创建出强大的React项目。
