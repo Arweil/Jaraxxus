@@ -14,7 +14,6 @@ const createLintingRule = () => ({
         browser: true
       },
       extends: [
-        require.resolve('eslint-config-react-app'),
         require.resolve('eslint-config-airbnb')
       ],
       plugins: [
@@ -26,7 +25,10 @@ const createLintingRule = () => ({
     },
     useEslintrc: false,
     emitWarning: !config.dev.showEslintErrorsInOverlay
-  }
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
 })
 
 const baseConf = {
@@ -50,7 +52,7 @@ const baseConf = {
         loader: require.resolve('babel-loader'),
         include: [config.srcPath],
         options: {
-          cacheDirectory: true
+          cacheDirectory: false
         }
       },
       {

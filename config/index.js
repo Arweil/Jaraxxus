@@ -26,10 +26,12 @@ let dev = {
   errorOverlay: mergeBooleanVal(true, confDev.errorOverlay),
   notifyOnErrors: mergeBooleanVal(true, confDev.notifyOnErrors),
   poll: mergeBooleanVal(false, confDev.poll), // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-  proxyTable: Object.assign({}, confDev.proxyTable),
+  proxyTable: confDev.proxyTable,
   contentBase: resolveApp(!!confDev.contentBase ? confDev.contentBase : 'public'),
   useEslint: mergeBooleanVal(true, confDev.useEslint),
-  showEslintErrorsInOverlay: mergeBooleanVal(true, confDev.showEslintErrorsInOverlay)
+  showEslintErrorsInOverlay: mergeBooleanVal(true, confDev.showEslintErrorsInOverlay),
+  before: confDev.before, // same as devServer 'before' method
+  after: confDev.after, // same as devServer 'after' method
 }
 dev.eslintRules = dev.useEslint ? require(resolveApp('eslint.rules.js')) : {}
 
@@ -43,9 +45,9 @@ const build = {
 }
 
 module.exports = {
-  entry: resolveApp('src/index.js'),
-  appHtml: resolveApp('public/index.html'),
-  srcPath: resolveApp('src'),
+  entry: resolveApp(config.entry),
+  appHtml: resolveApp(config.appHtml),
+  srcPath: resolveApp(config.srcPath),
   dev,
   build
 }

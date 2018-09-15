@@ -12,7 +12,7 @@ const devConf = merge(baseConf, {
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
   mode: 'development',
   entry: [
-    require.resolve('babel-polyfill'),
+    require.resolve('@babel/polyfill'),
     require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
     config.entry
@@ -46,7 +46,9 @@ const devConf = merge(baseConf, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    before: config.dev.before,
+    after: config.dev.after,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

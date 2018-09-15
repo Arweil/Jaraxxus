@@ -15,7 +15,7 @@ let webpackProdConfig = merge(baseConf, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   mode: 'production',
   entry: [
-    require.resolve('babel-polyfill'),
+    require.resolve('@babel/polyfill'),
     config.entry
   ],
   output: {
