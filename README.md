@@ -7,6 +7,44 @@
 3. *jaraxxus start* 命令用作dev环境；
 4. *jaraxxus build* 命令用作项目打包。
 
+## API
+jaraxxus.config.js
+
+```javascript
+const dev = {
+  assetsPublicPath: '/', // output.publicPath | devServer.publicPath
+  assetsSubDirectory: 'static', // 资源目录
+  devtool: 'eval-source-map', // source-map 类型
+  port: 3000, // 服务启用地址
+  errorOverlay: true, // devServer.overlay
+  poll: false, // devServer.watchOptions.poll https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+  proxyTable: {}, // devServer.proxyTable
+  useEslint: false, // 是否使用 eslint
+  showEslintErrorsInOverlay: true, // eslint-loader emitWarning
+  before: function(app) { // devServer.before
+  },
+  after: function(app) { // devServer.after
+  }
+}
+
+const build = {
+  assetsPublicPath: '/', // output.publicPath
+  assetsSubDirectory: 'static', // 资源目录
+  assetsRoot: 'dist', // 打包目录
+  productionSourceMap: false, // sourcemap css + js
+  bundleAnalyzerReport: true, // webpack-bundle-analyzer 是否启用
+}
+
+module.exports = {
+  entry: 'src/index.js', // webpack entry
+  srcPath: 'src', // 开发目录 在各loader的includes选项中使用
+  appHtml: 'public/index.html', // SPA入口HTML
+  cssModules: true, // 是否启用css模块化
+  dev,
+  build
+}
+```
+
 ## What means Jaraxxus
 ![Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
 

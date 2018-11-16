@@ -18,13 +18,12 @@ const devConf = merge(baseConf, {
     config.entry
   ],
   output: {
-    path: config.build.assetsRoot,
     publicPath: config.dev.assetsPublicPath
   },
   devtool: config.dev.devtool, // 配置生成Source Maps，选择合适的选项
   module: {
     rules: utils.baseStyleLoader({
-      cssModules: config.dev.cssModules,
+      cssModules: config.cssModules,
       sourceMap: true,
       extract: false
     })
@@ -34,10 +33,10 @@ const devConf = merge(baseConf, {
     historyApiFallback: true,
     hot: true,
     compress: true,
-    contentBase: config.dev.contentBase,
+    contentBase: config.dev.contentBase, // https://github.com/webpack/webpack-dev-server/issues/362
     host: config.dev.host,
     port: config.dev.port,
-    open: config.dev.autoOpenBrowser,
+    open: config.dev.autoOpenBrowser, // https://github.com/webpack/webpack-dev-server/issues/1510
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }
       : false,
@@ -62,5 +61,5 @@ const devConf = merge(baseConf, {
 const server = new webpackDevServer(webpack(devConf), devConf.devServer)
 
 server.listen(config.dev.port, '0.0.0.0', () => {
-  console.log(`Starting server on http://localhost:${config.dev.port}`)
+  console.log(`🥛  Starting server on http://localhost:${config.dev.port}`)
 })

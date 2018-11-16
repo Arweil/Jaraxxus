@@ -1,6 +1,6 @@
 {
   "name": "jaraxxus",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.01",
   "bin": {
     "jaraxxus": "./bin/jaraxxus.js"
   },
@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "commander": "^2.17.1",
+    "file-loader": "^2.0.0",
     "react": "^16.4.2"
   }
 }

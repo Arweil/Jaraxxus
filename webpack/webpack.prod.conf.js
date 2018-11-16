@@ -20,12 +20,13 @@ let webpackProdConfig = merge(baseConf, {
   ],
   output: {
     path: config.build.assetsRoot,
+    publicPath: config.build.assetsPublicPath,
     filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash:8].js')
   },
   module: {
     rules: utils.baseStyleLoader({
-      cssModules: config.build.cssModules,
+      cssModules: config.cssModules,
       sourceMap: config.build.productionSourceMap,
       extract: true
     })
