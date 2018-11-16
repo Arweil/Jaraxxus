@@ -46,7 +46,8 @@ module.exports = {
 ```
 
 ## What means Jaraxxus
-![Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
+![Load Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
+![Infernal](https://github.com/Arweil/Jaraxxus/blob/master/infernal.png)
 
 Jaraxxus是炉石中的一个恶魔，他非常强大，2费可以召唤一个666的地狱火。
 
