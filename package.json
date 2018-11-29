@@ -1,6 +1,6 @@
 {
   "name": "jaraxxus",
-  "version": "1.0.0-beta.01",
+  "version": "1.0.0-beta.02",
   "bin": {
     "jaraxxus": "./bin/jaraxxus.js"
   },
@@ -21,6 +21,7 @@
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
     "chalk": "^2.4.1",
+    "commander": "^2.19.0",
     "css-loader": "^1.0.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -30,6 +31,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
@@ -45,10 +47,5 @@
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
-  },
-  "devDependencies": {
-    "commander": "^2.17.1",
-    "file-loader": "^2.0.0",
-    "react": "^16.4.2"
   }
 }

@@ -36,7 +36,8 @@ const baseConf = {
     alias: {
       '@': config.srcPath,
     },
-    symlinks: false
+    symlinks: false,
+    extensions: ['', '.js', '.jsx']
   },
   module: {
     rules: [
