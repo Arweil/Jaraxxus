@@ -1,6 +1,6 @@
 {
   "name": "jaraxxus",
-  "version": "1.0.0-beta.02",
+  "version": "1.0.0-beta.03",
   "bin": {
     "jaraxxus": "./bin/jaraxxus.js"
   },
