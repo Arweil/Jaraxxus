@@ -8,26 +8,8 @@ const createLintingRule = () => ({
   include: [config.srcPath],
   options: {
     formatter: require('eslint-friendly-formatter'),
-    baseConfig: {
-      parser: require.resolve('babel-eslint'),
-      env: {
-        browser: true
-      },
-      extends: [
-        require.resolve('eslint-config-airbnb')
-      ],
-      plugins: [
-        'import',
-        'jsx-a11y',
-        'react'
-      ],
-      rules: config.dev.eslintRules
-    },
-    useEslintrc: false,
-    emitWarning: !config.dev.showEslintErrorsInOverlay
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
+    emitWarning: !config.dev.showEslintErrorsInOverlay,
+    configFile: config.dev.eslintConfigFile,
   },
 })
 
@@ -37,7 +19,7 @@ const baseConf = {
       '@': config.srcPath,
     },
     symlinks: false,
-    extensions: ['', '.js', '.jsx']
+    extensions: config.resolveExtensions,
   },
   module: {
     rules: [
@@ -45,7 +27,7 @@ const baseConf = {
       {
         parser: {
           requireEnsure: false
-        }
+        } 
       },
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {

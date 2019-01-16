@@ -44,7 +44,8 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
     // postcss-loader + autoprefixer css3前缀自动补全
     // 注意loader加载顺序(style, css, postcss, less)，否则会出错
     css: MakeLoaders(['css', 'postcss']),
-    less: MakeLoaders(['css', 'postcss', 'less'])
+    less: MakeLoaders(['css', 'postcss', 'less']),
+    scss: MakeLoaders(['css', 'postcss', 'sass']),
   }
 }
 
@@ -57,7 +58,7 @@ module.exports = {
     return path.join(assetsSubDirectory, _path)
   },
   baseStyleLoader ({ cssModules, sourceMap, extract }) {
-    let arrStyleLoader = ['less', 'css'];
+    let arrStyleLoader = ['less', 'scss', 'css'];
 
     let rules = [];
 

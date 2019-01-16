@@ -20,6 +20,7 @@ const dev = {
   poll: false, // devServer.watchOptions.poll https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
   proxyTable: {}, // devServer.proxyTable
   useEslint: false, // 是否使用 eslint
+  eslintRules: 'eslint.rules.js', // useEslint为true时生效，eslint.rules.js为根目录文件
   showEslintErrorsInOverlay: true, // eslint-loader emitWarning
   before: function(app) { // devServer.before
   },
