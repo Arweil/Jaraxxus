@@ -21,12 +21,12 @@ let dev = {
   assetsSubDirectory: !!confDev.assetsSubDirectory ? confDev.assetsSubDirectory : 'static',
   devtool: !!confDev.devtool ? confDev.devtool : 'cheap-module-eval-source-map',
   port: !!confDev.port ? confDev.port : 8080,
-  autoOpenBrowser: mergeBooleanVal(false, confDev.autoOpenBrowser),
+  autoOpenBrowser: mergeBooleanVal(false, confDev.autoOpenBrowser), // error with WDS
   errorOverlay: mergeBooleanVal(true, confDev.errorOverlay),
   poll: mergeBooleanVal(false, confDev.poll), // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
   proxyTable: confDev.proxyTable,
   hot: mergeBooleanVal(true, confDev.hot),
-  contentBase: resolveApp(!!confDev.contentBase ? confDev.contentBase : ''),
+  contentBase: resolveApp(!!confDev.contentBase ? confDev.contentBase : ''), // error with WDS
   useEslint: mergeBooleanVal(true, confDev.useEslint),
   eslintConfigFile: !!confDev.eslintConfigFile ? confDev.eslintConfigFile : '.eslintrc',
   showEslintErrorsInOverlay: mergeBooleanVal(true, confDev.showEslintErrorsInOverlay),
