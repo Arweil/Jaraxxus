@@ -49,6 +49,18 @@ module.exports = {
   srcPath: resolveApp(config.srcPath),
   cssModules: mergeBooleanVal(true, config.cssModules),
   resolveExtensions: (config.resolveExtensions && config.resolveExtensions.length > 0) ? config.resolveExtensions : ['.js', '.jsx'],
+  resolveAlias: (() => {
+    const alias = config.resolveAlias;
+    const arrAliasKey = Object.keys(alias);
+    if (alias && arrAliasKey.length > 0) {
+      arrAliasKey.map((key) => {
+        alias[key] = resolveApp(alias[key]);
+      });
+      return alias;
+    } else {
+      return {};
+    }
+  })(),
   dev,
   build
 }
