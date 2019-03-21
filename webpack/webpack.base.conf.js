@@ -15,9 +15,7 @@ const createLintingRule = () => ({
 
 const baseConf = {
   resolve: {
-    alias: Object.assign({
-      '@': config.srcPath,
-    }, config.resolveAlias),
+    alias: config.resolveAlias,
     symlinks: false,
     extensions: config.resolveExtensions,
   },

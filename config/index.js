@@ -7,8 +7,20 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 // 获取配置信息
 const config = require(resolveApp('jaraxxus.config.js'))
 
-function isBoolean (val) {
+function isBoolean(val) {
   return Object.prototype.toString.call(val) === '[object Boolean]'
+}
+
+function isUndefined(val) {
+  return Object.prototype.toString.call(val) === '[object Undefined]';
+}
+
+function isString(val) {
+  return Object.prototype.toString.call(val) === '[object String]';
+}
+
+function isArray(val) {
+  return Object.prototype.toString.call(val) === '[object Array]';
 }
 
 function mergeBooleanVal (defaultVal, newVal) {
@@ -46,7 +58,19 @@ const build = {
 module.exports = {
   entry: resolveApp(config.entry),
   appHtml: resolveApp(config.appHtml),
-  srcPath: resolveApp(config.srcPath),
+  srcPath: (() => {
+    const srcPath = config.srcPath;
+
+    if (isString(srcPath)) {
+      return resolveApp(config.srcPath);
+    } else if (isArray(srcPath)) {
+      return srcPath.map((src) => {
+        return resolveApp(src);
+      });
+    } else {
+      return '';
+    }
+  })(),
   cssModules: mergeBooleanVal(true, config.cssModules),
   resolveExtensions: (config.resolveExtensions && config.resolveExtensions.length > 0) ? config.resolveExtensions : ['.js', '.jsx'],
   resolveAlias: (() => {
