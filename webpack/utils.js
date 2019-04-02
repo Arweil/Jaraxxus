@@ -6,7 +6,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
   function MakeLoaders (arr) {
     let result = []
     let obj = {}
-    for (var i = 0, len = arr.length; i < len; i++) {
+    for (let i = 0, len = arr.length; i < len; i++) {
       let cnfg = { loader: require.resolve(`${arr[i]}-loader`) }
       cnfg.options = {
         sourceMap: !!sourceMap
@@ -16,6 +16,10 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
       if (arr[i] === 'css' && !!cssModules) {
         cnfg.options.modules = !!cssModules
         cnfg.options.localIdentName = '[name]-[local]-[hash:base64:5]'
+      }
+
+      if (arr[i] === 'less') {
+        cnfg.options.javascriptEnabled = true
       }
 
       result.push(cnfg)
@@ -62,7 +66,7 @@ module.exports = {
 
     let rules = [];
 
-    for (var i = 0, len = arrStyleLoader.length; i < len; i++) {
+    for (let i = 0, len = arrStyleLoader.length; i < len; i++) {
       let config = baseCssLoader({ cssModules, sourceMap, extract })[arrStyleLoader[i]];
       config.test = new RegExp(`\\.${arrStyleLoader[i]}$`);
       rules.push(config);

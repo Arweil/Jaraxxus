@@ -1,5 +1,6 @@
 const utils = require('./utils.js')
 const config = require('../config/index.js')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const createLintingRule = () => ({
   test: /\.(js|jsx)$/,
@@ -13,6 +14,13 @@ const createLintingRule = () => ({
   },
 })
 
+const babelLoader = {
+  loader: require.resolve('babel-loader'),
+  options: {
+    cacheDirectory: false,
+  }
+}
+
 const baseConf = {
   resolve: {
     alias: config.resolveAlias,
@@ -25,16 +33,25 @@ const baseConf = {
       {
         parser: {
           requireEnsure: false
-        } 
+        }
       },
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
-        test: /\.(js|jsx)$/,
-        loader: require.resolve('babel-loader'),
+        test: /\.ts(x?)$/,
         include: [config.srcPath],
-        options: {
-          cacheDirectory: false
-        }
+        use: [
+          babelLoader,
+          {
+            loader: require.resolve('ts-loader'),
+          }
+        ]
+      },
+      {
+        test: /\.(js|jsx)$/,
+        include: [config.srcPath],
+        use: [
+          babelLoader,
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -61,7 +78,10 @@ const baseConf = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+  ]
 }
 
 module.exports = baseConf

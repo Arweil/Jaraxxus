@@ -23,11 +23,11 @@ function isArray(val) {
   return Object.prototype.toString.call(val) === '[object Array]';
 }
 
-function mergeBooleanVal (defaultVal, newVal) {
+function mergeBooleanVal(defaultVal, newVal) {
   return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal
 }
 
-const confDev = config.dev
+const confDev = config.dev || {}
 let dev = {
   assetsPublicPath: !!confDev.assetsPublicPath ? confDev.assetsPublicPath : '/',
   assetsSubDirectory: !!confDev.assetsSubDirectory ? confDev.assetsSubDirectory : 'static',
@@ -46,7 +46,7 @@ let dev = {
   after: confDev.after, // same as devServer 'after' method
 }
 
-const confBuild = config.build
+const confBuild = config.build || {}
 const build = {
   assetsPublicPath: !!confBuild.assetsPublicPath ? confBuild.assetsPublicPath : '/',
   assetsSubDirectory: !!confBuild.assetsSubDirectory ? confBuild.assetsSubDirectory : 'static',
@@ -72,12 +72,12 @@ module.exports = {
     }
   })(),
   cssModules: mergeBooleanVal(true, config.cssModules),
-  resolveExtensions: (config.resolveExtensions && config.resolveExtensions.length > 0) ? config.resolveExtensions : ['.js', '.jsx'],
+  resolveExtensions: (config.resolveExtensions && config.resolveExtensions.length > 0) ? config.resolveExtensions : ['.js', '.jsx', '.ts', 'tsx'],
   resolveAlias: (() => {
     const alias = config.resolveAlias;
     const arrAliasKey = Object.keys(alias);
     if (alias && arrAliasKey.length > 0) {
-      arrAliasKey.map((key) => {
+      arrAliasKey.forEach((key) => {
         alias[key] = resolveApp(alias[key]);
       });
       return alias;
