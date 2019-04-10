@@ -1,31 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-
-const appDirectory = fs.realpathSync(process.cwd())
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
+const { appDirectory, resolveApp, isBoolean, isUndefined, isString, isArray, mergeBooleanVal } = require('./utils')
 
 // 获取配置信息
 const config = require(resolveApp('jaraxxus.config.js'))
-
-function isBoolean(val) {
-  return Object.prototype.toString.call(val) === '[object Boolean]'
-}
-
-function isUndefined(val) {
-  return Object.prototype.toString.call(val) === '[object Undefined]';
-}
-
-function isString(val) {
-  return Object.prototype.toString.call(val) === '[object String]';
-}
-
-function isArray(val) {
-  return Object.prototype.toString.call(val) === '[object Array]';
-}
-
-function mergeBooleanVal(defaultVal, newVal) {
-  return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal
-}
 
 const confDev = config.dev || {}
 let dev = {
