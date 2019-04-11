@@ -1,5 +1,3 @@
-const fs = require('fs')
-const path = require('path')
 const { appDirectory, resolveApp, isBoolean, isUndefined, isString, isArray, mergeBooleanVal } = require('./utils')
 
 // 获取配置信息

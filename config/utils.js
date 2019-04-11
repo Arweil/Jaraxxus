@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 function isBoolean(val) {
   return Object.prototype.toString.call(val) === '[object Boolean]'
 }
