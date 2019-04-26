@@ -61,19 +61,36 @@ const devServerConf = {
   after: config.dev.after
 }
 
-const compiler = webpack(devConf)
+const compiler = webpack(devConf);
+
 const server = new webpackDevServer(compiler, devServerConf)
 
 let spinner; 
+let spinnerFlag = false;
 
 server.listen(config.dev.port, '0.0.0.0', () => {
   console.log(`🥛  Start server on http://localhost:${config.dev.port}`)
 
   spinner = ora('compiling for development...');
   spinner.start();
+  spinnerFlag = true;
 })
 
 compiler.hooks.done.tap('CompilerProgressPlugins', function (stats) {
-  spinner.stop();
-  console.log(chalk.cyan('compiling complete.'));
+  if (spinnerFlag) {
+    spinner.stop();
+    spinnerFlag = false;
+  }
+
+  const info = stats.toJson();
+
+  if (stats.hasErrors()) {
+    console.log(chalk.red(info.errors));
+  }
+
+  const startTime = stats.startTime;
+  const endTime = stats.endTime;
+
+  const date = new Date(endTime);
+  console.log(chalk.cyan(`[EndTime: ${date.toLocaleString()}.${date.getMilliseconds()} & During: ${endTime - startTime}ms] build completed.`))
 })

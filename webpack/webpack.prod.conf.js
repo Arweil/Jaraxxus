@@ -2,6 +2,7 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -32,6 +33,7 @@ let webpackProdConfig = merge(baseConf, {
     })
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash:8].css')
     }),

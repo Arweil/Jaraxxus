@@ -20,6 +20,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
 
       if (arr[i] === 'less') {
         cnfg.options.javascriptEnabled = true
+        cnfg.options.modifyVars = config.lessModifyVars;
       }
 
       result.push(cnfg)

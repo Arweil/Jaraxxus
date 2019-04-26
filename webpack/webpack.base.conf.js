@@ -1,6 +1,5 @@
 const utils = require('./utils.js')
 const config = require('../config/index.js')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const createLintingRule = () => ({
   test: /\.(js|jsx)$/,
@@ -79,9 +78,6 @@ const baseConf = {
       }
     ]
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-  ]
 }
 
 module.exports = baseConf

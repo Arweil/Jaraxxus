@@ -48,6 +48,7 @@ module.exports = {
     }
   })(),
   cssModules: mergeBooleanVal(true, config.cssModules),
+  lessModifyVars: config.lessModifyVars || {},
   resolveExtensions: (config.resolveExtensions && config.resolveExtensions.length > 0) ? config.resolveExtensions : ['.js', '.jsx', '.ts', 'tsx'],
   resolveAlias: (() => {
     const alias = config.resolveAlias;
