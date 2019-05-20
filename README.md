@@ -75,7 +75,14 @@ module.exports = {
         },
       },
     ],
-    require.resolve('@babel/preset-react'),
+    [
+      require.resolve('@babel/preset-react'),
+      {
+        development: process.env.NODE_ENV === 'development',
+        useBuiltIns: true,
+      },
+    ],
+    require.resolve('@babel/preset-typescript'), // support ts
   ],
   plugins: [
     require.resolve('react-hot-loader/babel'),
