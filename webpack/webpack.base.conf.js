@@ -13,13 +13,6 @@ const createLintingRule = () => ({
   },
 })
 
-const babelLoader = {
-  loader: require.resolve('babel-loader'),
-  options: {
-    cacheDirectory: false,
-  }
-}
-
 const baseConf = {
   resolve: {
     alias: config.resolveAlias,
@@ -36,20 +29,15 @@ const baseConf = {
       },
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
-        test: /\.ts(x?)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         include: [config.srcPath],
         use: [
-          babelLoader,
           {
-            loader: require.resolve('ts-loader'),
-          }
-        ]
-      },
-      {
-        test: /\.(js|jsx)$/,
-        include: [config.srcPath],
-        use: [
-          babelLoader,
+            loader: require.resolve('babel-loader'),
+            options: {
+              cacheDirectory: false,
+            }
+          },
         ]
       },
       {
