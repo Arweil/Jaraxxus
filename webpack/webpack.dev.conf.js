@@ -9,6 +9,9 @@ const baseConf = require('./webpack.base.conf.js')
 const config = require('../config/index.js')
 const utils = require('./utils.js')
 
+// 设置webpack运行环境
+process.env.NODE_ENV = 'development'
+
 const devConf = merge(baseConf, {
   // 会将 process.env.NODE_ENV 的值设为 development
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
