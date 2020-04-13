@@ -20,7 +20,7 @@ const devConf = merge(baseConf, {
     require.resolve('webpack/hot/dev-server'),
   ]),
   output: {
-    publicPath: '/',
+    publicPath: config.publicPath,
     path: resolveApp(config.outputDir),
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[name].js')
@@ -39,10 +39,12 @@ const devConf = merge(baseConf, {
 })
 
 if (config.indexPath) {
-  new HtmlWebpackPlugin({
-    template: config.indexPath,
-    inject: true,
-  })
+  devConf.plugins.push(
+    new HtmlWebpackPlugin({
+      template: config.indexPath,
+      inject: true,
+    })
+  )
 }
 
 const devServerConf = config.devServer;

@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConf = require('./webpack.base.conf.js')
 const config = require('../config');
@@ -18,7 +17,7 @@ let webpackProdConfig = merge(baseConf, {
   mode: 'production',
   entry: utils.entryHandler([config.needPolyfill ? require.resolve('@babel/polyfill') : undefined]),
   output: {
-    publicPath: '/',
+    publicPath: config.publicPath,
     path: resolveApp(config.outputDir),
     filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
     chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].js')
@@ -57,22 +56,24 @@ let webpackProdConfig = merge(baseConf, {
 });
 
 if (config.indexPath) {
-  new HtmlWebpackPlugin({
-    template: config.indexPath,
-    inject: true,
-    minify: {
-      removeComments: true,
-      collapseWhitespace: true,
-      removeRedundantAttributes: true,
-      useShortDoctype: true,
-      removeEmptyAttributes: true,
-      removeStyleLinkTypeAttributes: true,
-      keepClosingSlash: true,
-      minifyJS: true,
-      minifyCSS: true,
-      minifyURLs: true,
-    }
-  })
+  webpackProdConfig.plugins.push(
+    new HtmlWebpackPlugin({
+      template: config.indexPath,
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      }
+    })
+  )
 }
 
 if (config.bundleAnalyzerReport) {

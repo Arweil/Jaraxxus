@@ -6,7 +6,7 @@ module.exports = {
   outputDir: 'dist',
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
-  indexPath: 'index.html',
+  indexPath: undefined,
   productionSourceMap: false,
   configureWebpack: {},
   bundleAnalyzerReport: false,

@@ -19,7 +19,7 @@ module.exports = {
   outputDir: 'dist', // 打包目录
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
-  indexPath: 'index.html', // SPA入口HTML
+  indexPath: undefined, // SPA入口HTML
   productionSourceMap: false, // 生成环境是否需要sourcemap css + js
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
