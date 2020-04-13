@@ -5,19 +5,17 @@ const createLintingRule = () => ({
   test: /\.(js|jsx)$/,
   loader: require.resolve('eslint-loader'),
   enforce: 'pre',
-  include: [config.srcPath],
+  include: [config.srcDir],
   options: {
     formatter: require('eslint-friendly-formatter'),
-    emitWarning: !config.dev.showEslintErrorsInOverlay,
-    configFile: config.dev.eslintConfigFile,
+    emitWarning: true,
+    configFile: config.eslintConfigFile,
   },
 })
 
 const baseConf = {
   resolve: {
-    alias: config.resolveAlias,
     symlinks: false,
-    extensions: config.resolveExtensions,
   },
   module: {
     rules: [
@@ -27,10 +25,10 @@ const baseConf = {
           requireEnsure: false
         }
       },
-      ...(config.dev.useEslint ? [createLintingRule()] : []),
+      ...(config.eslintConfigFile ? [createLintingRule()] : []),
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        include: [config.srcPath],
+        include: [config.srcDir],
         use: [
           {
             loader: require.resolve('babel-loader'),

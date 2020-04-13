@@ -1,6 +1,7 @@
 const path = require('path')
 const config = require('../config/index')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { isString, isArray, isObject, resolveApp } = require('../config/utils');
 
 function baseCssLoader ({ cssModules, sourceMap, extract }) {
   function MakeLoaders (arr) {
@@ -20,7 +21,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
 
       if (arr[i] === 'less') {
         cnfg.options.javascriptEnabled = true
-        cnfg.options.modifyVars = config.lessModifyVars;
+        cnfg.options.modifyVars = config.css.lessModifyVars;
       }
 
       result.push(cnfg)
@@ -55,12 +56,53 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
 }
 
 module.exports = {
-  assetsPath (_path) {
-    const assetsSubDirectory = process.env.NODE_ENV === 'production'
-      ? config.build.assetsSubDirectory
-      : config.dev.assetsSubDirectory
+  entryHandler (defaultEntry) {
+    const filtedEntry = defaultEntry.filter((item) => item);
 
-    return path.join(assetsSubDirectory, _path)
+    function resolveModules(entry) {
+      let result = {};
+      Object.entries(entry).map(([key, values]) => {
+        return {
+          [key]: values.map(item => {
+            if (item.import) {
+              const deepCopy = { ...item }
+              deepCopy.import = resolveApp(item.import);
+              return deepCopy;
+            } else {
+              return resolveApp(item);
+            }
+          }),
+        };
+      }).forEach((item) => {
+        result = {
+          ...result,
+          ...item
+        }
+      });
+
+      return result;
+    }
+
+    let fin = '';
+    if (isString(config.entry)) {
+      fin = resolveModules({
+        main: [...filtedEntry, config.entry]
+      });
+    } else if (isArray(config.entry)) {
+      fin = resolveModules({
+        main: [...filtedEntry, ...config.entry]
+      });
+    } else if (isObject(config.entry)) {
+      fin = resolveModules({
+        ...config.entry,
+        main: [...filtedEntry, ...config.entry.main]
+      })
+    }
+
+    return fin;
+  },
+  assetsPath (_path) {
+    return path.join(config.assetsDir, _path)
   },
   baseStyleLoader ({ cssModules, sourceMap, extract }) {
     let arrStyleLoader = ['less', 'scss', 'css'];

@@ -1,4 +1,3 @@
-
 const path = require('path')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
@@ -7,29 +6,28 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConf = require('./webpack.base.conf.js')
 const config = require('../config');
 const utils = require('./utils');
+const { resolveApp } = require('../config/utils');
 
 let webpackProdConfig = merge(baseConf, {
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
+  devtool: config.productionSourceMap ? '#source-map' : false,
   mode: 'production',
-  entry: [
-    require.resolve('@babel/polyfill'),
-    config.entry
-  ],
+  entry: utils.entryHandler([config.needPolyfill ? require.resolve('@babel/polyfill') : undefined]),
   output: {
-    path: config.build.assetsRoot,
-    publicPath: config.build.assetsPublicPath,
+    publicPath: '/',
+    path: resolveApp(config.outputDir),
     filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash:8].js')
+    chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].js')
   },
   module: {
     rules: utils.baseStyleLoader({
       cssModules: config.cssModules,
-      sourceMap: config.build.productionSourceMap,
-      extract: true
+      sourceMap: config.productionSourceMap,
+      extract: config.css.extract,
     })
   },
   plugins: [
@@ -38,22 +36,6 @@ let webpackProdConfig = merge(baseConf, {
       filename: utils.assetsPath('css/[name].[contenthash:8].css')
     }),
     new OptimizeCSSPlugin(), // css优化最小化
-    new HtmlWebpackPlugin({
-      template: config.appHtml,
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      }
-    })
   ],
   optimization: {
     minimizer: [
@@ -63,20 +45,39 @@ let webpackProdConfig = merge(baseConf, {
           compress: {
             warnings: false
           },
-          sourceMap: config.build.productionSourceMap
+          sourceMap: config.productionSourceMap
         }
       })
     ],
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-    }
+    // splitChunks: {
+    //   chunks: 'all',
+    //   name: 'vendors',
+    // }
   }
 });
 
-if (config.build.bundleAnalyzerReport) {
+if (config.indexPath) {
+  new HtmlWebpackPlugin({
+    template: config.indexPath,
+    inject: true,
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+      removeRedundantAttributes: true,
+      useShortDoctype: true,
+      removeEmptyAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      keepClosingSlash: true,
+      minifyJS: true,
+      minifyCSS: true,
+      minifyURLs: true,
+    }
+  })
+}
+
+if (config.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
   webpackProdConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-module.exports = webpackProdConfig;
+module.exports = merge(webpackProdConfig, config.configureWebpack);

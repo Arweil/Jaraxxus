@@ -17,6 +17,10 @@ function isArray(val) {
   return Object.prototype.toString.call(val) === '[object Array]';
 }
 
+function isObject(val) {
+  return Object.prototype.toString.call(val) === '[object Object]';
+}
+
 function mergeBooleanVal(defaultVal, newVal) {
   return isBoolean(newVal) ? newVal : !!newVal ? !!newVal : defaultVal
 }
@@ -34,6 +38,7 @@ module.exports = {
   isUndefined,
   isString,
   isArray,
+  isObject,
 
   mergeBooleanVal,
 }

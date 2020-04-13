@@ -11,40 +11,35 @@
 jaraxxus.config.js
 
 ```javascript
-const dev = {
-  assetsPublicPath: '/', // output.publicPath | devServer.publicPath
-  assetsSubDirectory: 'static', // 资源目录
-  devtool: 'cheap-module-eval-source-map', // source-map 类型
-  port: 8080, // 服务启用地址
-  errorOverlay: true, // devServer.overlay
-  poll: false, // devServer.watchOptions.poll https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-  proxyTable: {}, // devServer.proxyTable
-  hot: true, // devServer.hot
-  useEslint: false, // 是否使用 eslint
-  eslintConfigFile: '.eslintrc', // useEslint为true时生效，eslint.rules.js为根目录文件
-  showEslintErrorsInOverlay: true, // eslint-loader emitWarning
-  before: function(app) { // devServer.before
-  },
-  after: function(app) { // devServer.after
-  }
-}
-
-const build = {
-  assetsPublicPath: '/', // output.publicPath
-  assetsSubDirectory: 'static', // 资源目录
-  assetsRoot: 'dist', // 打包目录
-  productionSourceMap: false, // sourcemap css + js
-  bundleAnalyzerReport: true, // webpack-bundle-analyzer 是否启用
-}
-
 module.exports = {
   entry: 'src/index.js', // webpack entry
-  srcPath: 'src', // 开发目录 在各loader的includes选项中使用
-  appHtml: 'public/index.html', // SPA入口HTML
-  cssModules: true, // 是否启用css模块化
-  resolveExtensions: ['.js', '.jsx'], // resolve.extensions
-  dev,
-  build
+  needPolyfill: true, // 是否需要自动引入polyfill
+  publicPath: '/', // output.publicPath
+  assetsDir: 'static', // 资源目录
+  outputDir: 'dist', // 打包目录
+  srcDir: 'src', // 开发目录
+  eslintConfigFile: undefined, // eslint.rules.js为根目录文件
+  indexPath: 'index.html', // SPA入口HTML
+  productionSourceMap: false, // 生成环境是否需要sourcemap css + js
+  configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
+  bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
+  devServer: { // 和devServer配置相同，可以全量配置
+    publicPath: '/',
+    port: 9999,
+    clientLogLevel: 'info',
+    historyApiFallback: true,
+    compress: true,
+    hot: true,
+    open: true,
+    overlay: { warnings: false, errors: true },
+    contentBase: undefined,
+    quiet: true,
+  },
+  css: {
+    extract: false, // 是否需要在生产环境提取css打包
+    cssModules: false, // 是否启用css模块化
+    lessModifyVars: {}, // less modifyVars 配置
+  }
 }
 ```
 
