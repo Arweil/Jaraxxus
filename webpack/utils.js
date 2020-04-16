@@ -36,8 +36,9 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
     } else {
       obj.use = result
       obj.use.unshift({
-        loader: require.resolve('style-loader')
-      })
+        loader: require.resolve('style-loader'),
+        options: config.css.loaderOptions.style,
+      });
     }
 
     return obj

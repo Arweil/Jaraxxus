@@ -39,6 +39,9 @@ module.exports = {
     extract: false, // 是否需要在生产环境提取css打包
     cssModules: false, // 是否启用css模块化
     lessModifyVars: {}, // less modifyVars 配置
+    loaderOptions: {
+      style: {}, // style-loader options
+    }
   }
 }
 ```

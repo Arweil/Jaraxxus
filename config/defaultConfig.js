@@ -27,5 +27,8 @@ module.exports = {
     sourceMap: false,
     cssModules: false,
     lessModifyVars: {},
+    loaderOptions: {
+      style: {}, // style-loader options
+    }
   }
 }
