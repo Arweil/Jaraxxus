@@ -29,8 +29,8 @@ const devConf = merge(baseConf, {
   module: {
     rules: utils.baseStyleLoader({
       cssModules: config.css.cssModules,
-      sourceMap: true,
-      extract: false
+      sourceMap: config.css.sourceMap,
+      extract: config.css.extract,
     })
   },
   plugins: [

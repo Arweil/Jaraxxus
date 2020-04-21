@@ -20,7 +20,7 @@ module.exports = {
   srcDir: 'src', // 开发目录
   eslintConfigFile: undefined, // eslint.rules.js为根目录文件
   indexPath: undefined, // SPA入口HTML
-  productionSourceMap: false, // 生成环境是否需要sourcemap css + js
+  productionSourceMap: false, // 生成环境是否需要sourcemap js
   configureWebpack: {}, // webpack 配置，最后通过webpack-merge合并配置
   bundleAnalyzerReport: false, // webpack-bundle-analyzer 是否启用
   devServer: { // 和devServer配置相同，可以全量配置
@@ -38,6 +38,7 @@ module.exports = {
   css: {
     extract: false, // 是否需要在生产环境提取css打包
     cssModules: false, // 是否启用css模块化
+    sourceMap: false, // css sourceMap
     lessModifyVars: {}, // less modifyVars 配置
     loaderOptions: {
       style: {}, // style-loader options

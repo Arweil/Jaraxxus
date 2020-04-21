@@ -24,8 +24,8 @@ let webpackProdConfig = merge(baseConf, {
   },
   module: {
     rules: utils.baseStyleLoader({
-      cssModules: config.cssModules,
-      sourceMap: config.productionSourceMap,
+      cssModules: config.css.cssModules,
+      sourceMap: config.css.sourceMap,
       extract: config.css.extract,
     })
   },
