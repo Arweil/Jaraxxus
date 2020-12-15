@@ -2,10 +2,17 @@ const path = require('path')
 const config = require('../config/index')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { isString, isArray, isObject, resolveApp } = require('../config/utils');
+const { workerPoolLess, workerPoolSass } = require('./threadLoader');
 
 function baseCssLoader ({ cssModules, sourceMap, extract }) {
   function MakeLoaders (arr) {
-    let result = []
+    let result = [
+      {
+        loader: require.resolve('thread-loader'),
+        options: arr.includes('sass') ? workerPoolSass : workerPoolLess,
+      },
+    ];
+
     let obj = {}
     for (let i = 0, len = arr.length; i < len; i++) {
       let cnfg = { loader: require.resolve(`${arr[i]}-loader`) }
