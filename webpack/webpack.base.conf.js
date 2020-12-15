@@ -1,5 +1,8 @@
 const utils = require('./utils.js')
 const config = require('../config/index.js')
+const { initThreadLoader, workerPoolJS } = require('./threadLoader');
+
+initThreadLoader();
 
 const createLintingRule = () => ({
   test: /\.(js|jsx)$/,
@@ -11,7 +14,7 @@ const createLintingRule = () => ({
     emitWarning: true,
     configFile: config.eslintConfigFile,
   },
-})
+});
 
 const baseConf = {
   resolve: {
@@ -30,6 +33,10 @@ const baseConf = {
         test: /\.(js|jsx|ts|tsx)$/,
         include: [config.srcDir],
         use: [
+          {
+            loader: require.resolve('thread-loader'),
+            options: workerPoolJS,
+          },
           {
             loader: require.resolve('babel-loader'),
             options: {
