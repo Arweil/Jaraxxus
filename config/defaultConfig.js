@@ -10,6 +10,7 @@ module.exports = {
   productionSourceMap: false,
   configureWebpack: {},
   bundleAnalyzerReport: false,
+  babelExtends: 'babel.config.js', // 可以指定babel文件，默认为babel.config.js
   devServer: {
     publicPath: '/',
     port: 9999,

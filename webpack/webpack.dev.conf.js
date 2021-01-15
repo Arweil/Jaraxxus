@@ -15,7 +15,8 @@ const devConf = merge(baseConf, {
   // 启用 NamedChunksPlugin 和 NamedModulesPlugin
   mode: 'development',
   entry: utils.entryHandler([
-    config.needPolyfill ? require.resolve('@babel/polyfill') : undefined,
+    config.needPolyfill ? require.resolve('core-js/stable') : undefined,
+    config.needPolyfill ? require.resolve('regenerator-runtime/runtime') : undefined,
     require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
   ]),
@@ -25,7 +26,7 @@ const devConf = merge(baseConf, {
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[name].js')
   },
-  devtool: 'cheap-module-eval-source-map', // 配置生成Source Maps，选择合适的选项
+  devtool: 'cheap-module-source-map', // 配置生成Source Maps，选择合适的选项
   module: {
     rules: utils.baseStyleLoader({
       cssModules: config.css.cssModules,

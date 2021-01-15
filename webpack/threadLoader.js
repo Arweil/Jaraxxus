@@ -18,13 +18,14 @@ const workerPoolLess = {
 
 function initThreadLoader() {
   threadLoader.warmup(workerPoolJS, ['babel-loader']);
-  threadLoader.warmup(workerPoolSass, ['sass-loader', 'css-loader']);
-  threadLoader.warmup(workerPoolLess, ['less-loader', 'css-loader']);
+  // TODO: has issus about css-loader & less-loader https://github.com/webpack-contrib/thread-loader/issues/96 postcss will not run.
+  // threadLoader.warmup(workerPoolSass, ['sass-loader', 'css-loader']);
+  // threadLoader.warmup(workerPoolLess, ['less-loader', 'css-loader']);
 }
 
 module.exports = {
   initThreadLoader,
   workerPoolJS,
-  workerPoolSass,
-  workerPoolLess,
+  // workerPoolSass,
+  // workerPoolLess,
 }

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const _ = require('lodash');
 
 const { appDirectory, resolveApp, isBoolean, isUndefined, isString, isArray, mergeBooleanVal } = require('./utils');
@@ -7,6 +8,9 @@ const defaultConfig = require('./defaultConfig');
 const customConfig = require(resolveApp('jaraxxus.config.js'));
 
 const config = _.merge(defaultConfig, customConfig);
+
+const pathOfBabelConfig = resolveApp(config.babelExtends);
+config.babelExtends = fs.existsSync(pathOfBabelConfig) ? pathOfBabelConfig : undefined;
 
 config.srcDir = (() => {
   const srcDir = config.srcDir;

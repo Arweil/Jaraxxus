@@ -3,8 +3,8 @@ const merge = require('webpack-merge')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const TerserWebpackPlugin = require("terser-webpack-plugin")
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const baseConf = require('./webpack.base.conf.js')
@@ -13,9 +13,12 @@ const utils = require('./utils');
 const { resolveApp } = require('../config/utils');
 
 let webpackProdConfig = merge(baseConf, {
-  devtool: config.productionSourceMap ? '#source-map' : false,
+  devtool: config.productionSourceMap ? 'source-map' : false,
   mode: 'production',
-  entry: utils.entryHandler([config.needPolyfill ? require.resolve('@babel/polyfill') : undefined]),
+  entry: utils.entryHandler([
+    config.needPolyfill ? require.resolve('core-js/stable') : undefined,
+    config.needPolyfill ? require.resolve('regenerator-runtime/runtime') : undefined
+  ]),
   output: {
     publicPath: config.publicPath,
     path: resolveApp(config.outputDir),
@@ -38,20 +41,17 @@ let webpackProdConfig = merge(baseConf, {
   ],
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({ // 代码压缩
-        uglifyOptions: {
-          comments: false,
-          compress: {
-            warnings: false
+      new TerserWebpackPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+            ascii_only: true,
+            safari10: true,
           },
           sourceMap: config.productionSourceMap
         }
       })
-    ],
-    // splitChunks: {
-    //   chunks: 'all',
-    //   name: 'vendors',
-    // }
+    ]
   }
 });
 

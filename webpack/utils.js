@@ -3,14 +3,23 @@ const config = require('../config/index')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { isString, isArray, isObject, resolveApp } = require('../config/utils');
 const { workerPoolLess, workerPoolSass } = require('./threadLoader');
+const postcssLoadConfig = require('postcss-load-config');
 
 function baseCssLoader ({ cssModules, sourceMap, extract }) {
+  const hasPostcssConfig = (() => {
+    try {
+      return !!postcssLoadConfig.sync();
+    } catch (_error) {
+      return false;
+    }
+  })();
+
   function MakeLoaders (arr) {
     let result = [
-      {
-        loader: require.resolve('thread-loader'),
-        options: arr.includes('sass') ? workerPoolSass : workerPoolLess,
-      },
+      // {
+      //   loader: require.resolve('thread-loader'),
+      //   options: arr.includes('sass') ? workerPoolSass : workerPoolLess,
+      // },
     ];
 
     let obj = {}
@@ -27,11 +36,27 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
       }
 
       if (arr[i] === 'less') {
-        cnfg.options.javascriptEnabled = true
-        cnfg.options.modifyVars = config.css.lessModifyVars;
+        cnfg.options.lessOptions = {
+          javascriptEnabled: true,
+          modifyVars: config.css.lessModifyVars 
+        };
       }
 
-      result.push(cnfg)
+      // postcss-loader 配置
+      if (arr[i] === 'postcss' && !hasPostcssConfig) {
+        cnfg.options.ident = 'postcss';
+        cnfg.options.plugins = [
+          require('postcss-preset-env')({
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
+          }),
+          require('postcss-normalize')(),
+        ]
+      }
+
+      result.push(cnfg);
     }
 
     // style-loader 放到use数组起始位置 & 是否提取css
@@ -45,7 +70,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
       obj.use.unshift({
         loader: require.resolve('style-loader'),
         options: config.css.loaderOptions.style,
-      });
+      })
     }
 
     return obj
@@ -55,7 +80,7 @@ function baseCssLoader ({ cssModules, sourceMap, extract }) {
     // style-loader 用于脚本的提取，关联html
     // css-loader 可以使脚本直接require *.css文件
     // less-loader 可以使脚本直接require *.less文件
-    // postcss-loader + autoprefixer css3前缀自动补全
+    // postcss-loader
     // 注意loader加载顺序(style, css, postcss, less)，否则会出错
     css: MakeLoaders(['css', 'postcss']),
     less: MakeLoaders(['css', 'postcss', 'less']),

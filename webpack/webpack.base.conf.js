@@ -40,7 +40,29 @@ const baseConf = {
           {
             loader: require.resolve('babel-loader'),
             options: {
-              cacheDirectory: false,
+              cacheDirectory: true,
+              cacheCompression: false, // 关闭gzip压缩提升构建效率
+              babelrc: false,
+              configFile: false,
+              presets: [
+                [
+                  require.resolve('@babel/preset-env'),
+                  {
+                    useBuiltIns: 'entry',
+                    corejs: 3
+                  },
+                ],
+                [
+                  require.resolve('@babel/preset-react'),
+                  {
+                    development: process.env.NODE_ENV === 'development',
+                    useBuiltIns: true,
+                  },
+                ],
+                require.resolve('@babel/preset-typescript'),
+              ],
+              plugins: [require.resolve("@babel/plugin-transform-runtime")],
+              extends: config.babelExtends,
             }
           },
         ]
