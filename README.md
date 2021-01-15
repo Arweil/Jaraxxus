@@ -48,8 +48,11 @@ module.exports = {
 ```
 
 ## 配置babel
+此版本已经不需要额外的配置*babel.config.js*文件了。
 
-babel.config.js
+如果需要额外的配置，默认使用*babel*中的*extends*配置项去拓展配置。
+
+babel.config.js 参考文件
 ```javascript
 module.exports = {
   presets: [
@@ -91,6 +94,11 @@ module.exports = {
   ],
 };
 ```
+
+## 关于postcss
+此版本已经不需要格外的配置*postcss.config.js*文件了。
+
+如果需要额外的配置，可以另外声明*postcss.config.js*，将会覆盖已有的默认配置（*postcss-preset-env* & *postcss-normalize*）。
 
 ## What means Jaraxxus
 ![Load Jaraxxus](https://github.com/Arweil/Jaraxxus/blob/master/jaraxxus.png)
