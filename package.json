@@ -41,7 +41,7 @@
     "less-loader": "7.2.1",
     "lodash": "^4.17.19",
     "mini-css-extract-plugin": "0.11.3",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "ora": "^3.0.0",
     "postcss-load-config": "^3.0.0",
